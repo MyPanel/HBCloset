@@ -1,0 +1,18 @@
+extends index.pug
+
+block content
+    nav(class="navbar2")
+        ul(class="nav-container2")
+            li(class="nav-item2")
+                a(href="/closet/top") top
+            li(class="nav-item2") 
+                a(href="/closet/bottom") bottom
+            li(class="nav-item2")
+                a(href="/closet/outer") outer
+            li(class="nav-item2")
+                a(href="/closet/acc") acc
+            -if(currentUser)
+                -if(currentUser.admin==1)
+                    li(class="nav-item2")
+                        a(href="/closet/add_page") 상품 추가
+    block list

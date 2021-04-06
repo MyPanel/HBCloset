@@ -1,0 +1,37 @@
+extends closet.pug
+
+block list
+    link(rel="stylesheet", href="../css/main.css")
+    div(id="wrapper")
+        div(class="detailImg")
+            img(src="/image/clothes/"+ detail[0].name+'/1.jpg')
+        div(class="detailDiv")
+            h1(class="detailTilte")=detail[0].name
+            p(class="detailPrice")=detail[0].cost
+            form(class="detailPrice",action="/buy", method="post")
+                h2 사이즈
+                input(type="hidden" id="gameToken" name="buyId" value=detail[0].id)
+                select(name="size")
+                    option(value="90") 90
+                    option(value="95") 95
+                    option(value="100") 100
+                    option(value="105") 105
+                br
+                br
+                button(type="submit") 구매하기
+                //-if(currentUser.admin==1)
+                a(href="/closet/detail/update/"+detail[0].id) 수정하기
+                br
+                a(href="/pay/soldout") 매진처리
+                br
+                a(href="/closet/supply") 판매재개
+    hr
+    button(style="margin: 0 auto;")
+        a(href="/closet/"+detail[0].category) 목록으로
+    div(class="images")
+        -if(length>1)
+            -for(var i=2;i<=length;i++)
+                img(width='70%',src="/image/clothes/"+ detail[0].name+'/'+i+'.jpg')
+        
+        -else
+            h1 부가 이미지가 없습니다.

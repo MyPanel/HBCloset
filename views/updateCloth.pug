@@ -1,0 +1,55 @@
+link(rel="stylesheet", href="../../../css/main.css")
+script(src="../../../js/imgUpdate.js")
+
+li(class="back_button")
+    a(href="/../../closet") back
+
+button(onclick="click_addPicture()") 부가 사진 추가    
+
+form(class="loginForm", action="/closet/update/"+(detail[0].id), method="post",enctype="multipart/form-data")
+    div(class="idForm") 
+        label(for="name") Name
+        input(type="text", name="name", class="id" placeholder="Name" value=detail[0].name)
+    div(class="idForm")
+        label(for="cost") Cost
+        input(type="number", name="cost", class="id" placeholder="Cost" value=detail[0].cost) 
+    div(class="categoryForm")
+        label(for="category") Category
+            br
+            label top
+            -if(detail[0].category=="top") 
+                input(type='radio', name='category', value='top' checked)
+            -else
+                input(type='radio', name='category', value='top')
+            label bottom
+            -if(detail[0].category=="bottom") 
+                input(type='radio', name='category', value='bottom' checked)
+            -else
+                input(type='radio', name='category', value='bottom')            
+            label acc
+            -if(detail[0].category=="acc") 
+                input(type='radio', name='category', value='acc' checked)
+            -else
+                input(type='radio', name='category', value='acc')            
+            label outer
+            -if(detail[0].category=="outer") 
+                input(type='radio', name='category', value='outer' checked)
+            -else
+                input(type='radio', name='category', value='outer')
+
+
+    div(class="images")
+        -if(length>=1)
+            -for(var i=1;i<=length;i++)
+                -if(i==1)
+                    label 대표사진 
+                img(id="img"+i,width='70%',src="/image/clothes/"+ detail[0].name+'/'+i+'.jpg')
+                input(id="imgUrl"+i, type="hidden", name="imgUrl", value="/public/image/clothes/"+ detail[0].name+'/'+i+'.jpg')
+                span(id=i,onclick="image_delete('"+i+"','imgUrl"+i+"')") 삭제하기
+                //- input(type="file",source="/image/clothes/"+ detail[0].name+'/'+i+'_'+detail[0].name+'.jpg',name="")
+        -else
+            h1 이미지가 없습니다.
+
+
+    button(type="submit", value="Submit" class="btn") 수정완료
+

@@ -1,0 +1,16 @@
+link(rel="stylesheet", href="../css/main.css")
+script(src="../js/imgPreview.js")
+
+li(class="back_button")
+    a(href="../closet") back
+p(class="edit-p") 부가 사진을 추가해주세요 
+p(class="edit-p") (상세보기에서 보일 사진 업로드)
+button(onclick="click_addPicture()") 사진 추가
+
+form(class="loginForm", action="/closet/edit", method="post",enctype="multipart/form-data")
+    div(class="idForm")
+        input(type="file", name="img", onchange="previewImage(this,'View_area')")
+        div(id='View_area')
+    div(id="blind")
+        input(id="editClothCategory",type="text",name="name", value=`${name}`)
+    input(type="submit", value="Submit" class="btn")

@@ -1,0 +1,12 @@
+extends chat.pug
+
+block chatRoom
+    #content(style='float: left; width: 50%; height: 80%; margin: 30px 30px; padding: 10px 10px;border: solid 1px #999; overflow-y: scroll;')
+    .controls(style='float: right; width: 35%; height: 80%; margin: 30px 30px; padding: 10px 10px; border: solid 1px #999;')
+        | Name:
+        br
+        input#name(style='width:95%;', placeholder=`${currentUser.username}`)
+        | Message:
+        br
+        textarea(id="field", name="message", style='width:95%;', rows="10")
+        input#send(type='button', value='send')

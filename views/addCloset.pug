@@ -1,0 +1,32 @@
+link(rel="stylesheet", href="../css/main.css")
+script(src="../js/imgPreview.js")
+
+li(class="back_button")
+    a(href="../closet") back
+
+button(onclick="click_addPicture()") 부가 사진 추가
+
+form(class="loginForm", action="/closet/add", method="post",enctype="multipart/form-data")
+    div(class="idForm") 
+        label(for="name") Name
+        input(type="text", name="name", class="id" placeholder="Name")
+    div(class="idForm")
+        label(for="cost") Cost
+        input(type="number", name="cost", class="id" placeholder="Cost") 
+    div(class="categoryForm")
+        label(for="category") Category
+            br
+            label top
+            input(type='radio', name='category', value='top')
+            label bottom
+            input(type='radio', name='category', value='bottom')
+            label acc
+            input(type='radio', name='category', value='acc')
+            label outer
+            input(type='radio', name='category', value='outer')
+    div(class="idForm")
+        label 대표 사진을 업로드해주세요
+        input(type="file", name="img", onchange="previewImage(this,'View_area')")
+        div(id='View_area')
+    
+    input(type="submit", value="Submit" class="btn")

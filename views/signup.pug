@@ -1,0 +1,14 @@
+extends index.pug
+
+block content
+    form(class="loginForm", action="/signup/try", method="post")
+        h2 Signup
+        div(class="idForm")
+            input(type="text", name="username", class="id" placeholder="Name")
+        div(class="idForm")
+            input(type="email", name="email", class="id" placeholder="Email")
+        div(class="passForm")
+            input(type="password", name="password" class="pw", placeholder="Password")
+        div(class="passForm")
+            input(type="password", name="password_confirm" class="pw", placeholder="Password Confirm")
+        input(type="submit", value="Sign up" class="btn")

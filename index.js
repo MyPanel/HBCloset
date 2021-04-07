@@ -39,7 +39,9 @@ app.use('/login',require('./routes/loginRoute')(express.Router(),connection,pass
 app.use('/signup', require('./routes/signupRoute')(express.Router(),connection,passport));
 
 
-server.listen(8000,()=>{
+const PORT = process.env.PORT || 8000;
+
+server.listen(PORT,()=>{
     console.log("서버 시작");
 });
 

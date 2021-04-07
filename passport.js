@@ -24,7 +24,7 @@ module.exports = (passport,db) => {
         function(req, email, password, done) {
 
             db.query("SELECT * FROM user WHERE email = ?", [email], (err, rows) => {
-                console.log(rows);
+                console.log("###"+rows);
                 if (err)
                     return done(err);
                 if (rows.length) {
@@ -32,7 +32,7 @@ module.exports = (passport,db) => {
                 } else {
                     var newUserMysql = {
                         email,
-                        password:bcrypt.hashSync(password, null, null),
+                        password:bcrypt.hashSync(password),
                         username:req.body.username
                     };
                     console.log(newUserMysql);
@@ -56,15 +56,20 @@ module.exports = (passport,db) => {
         },
         (req, username, password, done) => { // callback with email and password from our form
             db.query("SELECT * FROM user WHERE email = ?", [username], function(err, rows){
-                if (err)
+                if (err){                    
+                    console.log('비교중 에러 발생');
                     return done(err);
+                }
                 if (!rows.length) {
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 }
 
                 // if the user is found but the password is wrong
-                if (!bcrypt.compareSync(password, rows[0].password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                if (!bcrypt.compareSync(password, rows[0].password)){
+                    console.log('받은 password : '+ password);
+                    console.log(bcrypt.compare(password,rows[0].password))
+                    console.log('비밀번호 일치하지않음');
+                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));}
                 // all is well, return successful user
                 console.log(rows[0]);
                 return done(null, rows[0]);

@@ -1,6 +1,7 @@
 module.exports = {
-    'host': 'localhost',
+    'host': '34.64.159.49',
     'user': 'root',
+    'password': 'Nsa29885+',
     'port': 3306,
 	'database': 'hbcloset'
 };

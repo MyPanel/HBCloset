@@ -1,14 +1,14 @@
-import express from 'express';
-import mysql from 'mysql';
-import bodyParser from 'body-parser';
-import dbconfig from './db';
-import indexRoute from './routes/indexRoute';
-import session from 'express-session';
+var express =require('express');
+var mysql = require('mysql') ;
+var bodyParser = require('body-parser') ;
+var dbconfig = require('./db') ;
+var indexRoute = require('./routes/indexRoute') ;
+var session = require('express-session') ;
 var MySQLStore = require('express-mysql-session')(session);
-import cookieParser from 'cookie-parser';
-import passport from 'passport'
-import flash from 'connect-flash';
-import socketHandler from './socket';
+var cookieParser = require('cookie-parser') ;
+var passport = require('passport') 
+var flash = require('connect-flash') ;
+var socketHandler = require('./socket') ;
 
 const connection = mysql.createConnection(dbconfig);
 

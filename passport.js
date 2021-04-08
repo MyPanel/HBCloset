@@ -30,15 +30,15 @@ module.exports = (passport,db) => {
                 if (rows.length) {
                     return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
                 } else {
-                    var newUserMysql = {
+                    var newUserMysql = [
                         email,
-                        password:bcrypt.hashSync(password, null, null),
-                        username:req.body.username
-                    };
+                        bcrypt.hashSync(password, null, null),
+                        req.body.username
+		    ];
                     console.log(newUserMysql);
                     db.query("INSERT INTO user ( email, password, username ) values (?,?,?)", newUserMysql, (err, rows) => {
                         // newUserMysql.email = rows.username;
-
+				console.log(err);
                         return done(null, newUserMysql);
                     });
                 }
@@ -55,14 +55,17 @@ module.exports = (passport,db) => {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         (req, username, password, done) => { // callback with email and password from our form
-            db.query("SELECT * FROM user WHERE email = ?", [username], function(err, rows){
+		console.log(username,'+', password)
+		db.query("SELECT * FROM user WHERE email = ?", [username], function(err, rows){
                 if (err)
                     return done(err);
                 if (!rows.length) {
+			console.log("No User Found");
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 }
-
-                // if the user is found but the password is wrong
+		console.log("유저는 찾았는데 비교 해야지 이지");
+		console.log(rows[0]+'$$$$$');	
+                // if the user is ound but the password is wrong
                 if (!bcrypt.compareSync(password, rows[0].password))
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
                 // all is well, return successful user

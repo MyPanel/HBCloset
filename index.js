@@ -1,15 +1,14 @@
-import express from 'express';
-import mysql from 'mysql';
-import bodyParser from 'body-parser';
-import dbconfig from './db';
-import indexRoute from './routes/indexRoute';
-import session from 'express-session';
+var express =require('express');
+var mysql = require('mysql') ;
+var bodyParser = require('body-parser') ;
+var dbconfig = require('./db') ;
+var indexRoute = require('./routes/indexRoute') ;
+var session = require('express-session') ;
 var MySQLStore = require('express-mysql-session')(session);
-import cookieParser from 'cookie-parser';
-import passport from 'passport'
-import flash from 'connect-flash';
-import socketHandler from './socket';
-
+var cookieParser = require('cookie-parser') ;
+var passport = require('passport') 
+var flash = require('connect-flash') ;
+var socketHandler = require('./socket') ;
 const connection = mysql.createConnection(dbconfig);
 
 connection.connect();
@@ -38,9 +37,8 @@ app.use('/chat',require('./routes/chatRoute')(express.Router(),connection,passpo
 app.use('/login',require('./routes/loginRoute')(express.Router(),connection,passport));
 app.use('/signup', require('./routes/signupRoute')(express.Router(),connection,passport));
 
-
-server.listen(8000,()=>{
-    console.log("서버 시작");
-});
-
+var PORT = process.env.PORT || 3000
+server.listen(8000,'0.0.0.0',()=>{
+ console.log(connection.query('desc user'));
+	console.log('server open');});
 socketHandler(io);

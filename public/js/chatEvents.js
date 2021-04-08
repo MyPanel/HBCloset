@@ -1,7 +1,7 @@
 window.onload = function() {
     var messages = [];
     var rooms = [];
-    const socket = io.connect('http://localhost:8000', {
+    const socket = io.connect('http://35.216.77.167:8000/', {
         path: '/socket.io',
         transports: ['websocket']
     });

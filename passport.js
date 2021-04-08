@@ -24,7 +24,7 @@ module.exports = (passport,db) => {
         function(req, email, password, done) {
 
             db.query("SELECT * FROM user WHERE email = ?", [email], (err, rows) => {
-                console.log(rows);
+                console.log("###"+rows);
                 if (err)
                     return done(err);
                 if (rows.length) {
@@ -32,9 +32,15 @@ module.exports = (passport,db) => {
                 } else {
                     var newUserMysql = [
                         email,
+<<<<<<< HEAD
                         bcrypt.hashSync(password, null, null),
                         req.body.username
 		    ];
+=======
+                        password:bcrypt.hashSync(password),
+                        username:req.body.username
+                    };
+>>>>>>> f7bf0d01cf446e3aaa8df70a5ef656cf0b60c0dd
                     console.log(newUserMysql);
                     db.query("INSERT INTO user ( email, password, username ) values (?,?,?)", newUserMysql, (err, rows) => {
                         // newUserMysql.email = rows.username;
@@ -55,19 +61,36 @@ module.exports = (passport,db) => {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
         (req, username, password, done) => { // callback with email and password from our form
+<<<<<<< HEAD
 		console.log(username,'+', password)
 		db.query("SELECT * FROM user WHERE email = ?", [username], function(err, rows){
                 if (err)
+=======
+            db.query("SELECT * FROM user WHERE email = ?", [username], function(err, rows){
+                if (err){                    
+                    console.log('비교중 에러 발생');
+>>>>>>> f7bf0d01cf446e3aaa8df70a5ef656cf0b60c0dd
                     return done(err);
+                }
                 if (!rows.length) {
 			console.log("No User Found");
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 }
+<<<<<<< HEAD
 		console.log("유저는 찾았는데 비교 해야지 이지");
 		console.log(rows[0]+'$$$$$');	
                 // if the user is ound but the password is wrong
                 if (!bcrypt.compareSync(password, rows[0].password))
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+=======
+
+                // if the user is found but the password is wrong
+                if (!bcrypt.compareSync(password, rows[0].password)){
+                    console.log('받은 password : '+ password);
+                    console.log(bcrypt.compare(password,rows[0].password))
+                    console.log('비밀번호 일치하지않음');
+                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));}
+>>>>>>> f7bf0d01cf446e3aaa8df70a5ef656cf0b60c0dd
                 // all is well, return successful user
                 console.log(rows[0]);
                 return done(null, rows[0]);
